@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.util.Assert;
@@ -39,6 +40,9 @@ public class Cliente {
 				joinColumns = {@JoinColumn(name = "cliente_id", referencedColumnName = "id")},
 				inverseJoinColumns = {@JoinColumn(name = "endereco_id", referencedColumnName = "id")})
 	List<Endereco> enderecos;
+	
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Conta> contas;
 	
 	
 	public Cliente() {
