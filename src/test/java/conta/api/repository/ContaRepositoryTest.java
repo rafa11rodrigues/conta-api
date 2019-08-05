@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import conta.api.model.Agencia;
-import conta.api.model.Cidade;
-import conta.api.model.Cliente;
-import conta.api.model.Conta;
-import conta.api.model.ContaTipo;
-import conta.api.model.Estado;
-import conta.api.model.Historico;
-import conta.api.model.HistoricoTipo;
+import conta.api.domain.entity.Agencia;
+import conta.api.domain.entity.Cidade;
+import conta.api.domain.entity.Cliente;
+import conta.api.domain.entity.Conta;
+import conta.api.domain.entity.ContaTipo;
+import conta.api.domain.entity.Estado;
+import conta.api.domain.entity.Historico;
+import conta.api.domain.entity.HistoricoTipo;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

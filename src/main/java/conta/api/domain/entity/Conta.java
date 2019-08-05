@@ -1,4 +1,4 @@
-package conta.api.model;
+package conta.api.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;

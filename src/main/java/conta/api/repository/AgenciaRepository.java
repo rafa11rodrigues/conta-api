@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import conta.api.model.Agencia;
-import conta.api.model.Cidade;
-import conta.api.model.Estado;
+import conta.api.domain.entity.Agencia;
+import conta.api.domain.entity.Cidade;
+import conta.api.domain.entity.Estado;
 
 public interface AgenciaRepository extends JpaRepository<Agencia, Long> {
 

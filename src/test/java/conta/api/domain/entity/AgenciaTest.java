@@ -1,4 +1,4 @@
-package conta.api.model;
+package conta.api.domain.entity;
 
 import org.junit.Assert;
 import org.junit.Before;

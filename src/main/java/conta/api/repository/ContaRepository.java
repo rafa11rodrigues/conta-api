@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import conta.api.model.Agencia;
-import conta.api.model.Conta;
+import conta.api.domain.entity.Agencia;
+import conta.api.domain.entity.Conta;
 
 public interface ContaRepository extends JpaRepository<Conta, Long> {
 

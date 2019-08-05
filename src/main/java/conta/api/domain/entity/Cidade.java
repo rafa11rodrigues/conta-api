@@ -1,4 +1,4 @@
-package conta.api.model;
+package conta.api.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +37,11 @@ public class Cidade {
 		Assert.hasText(nome, "nome não pode ser nulo nem vazio");
 		Assert.notNull(uf, "uf não pode ser nulo");
 		
+		this.nome = nome;
+		this.uf = uf;
+	}
+	
+	public void alterar(String nome, Estado uf) {
 		this.nome = nome;
 		this.uf = uf;
 	}

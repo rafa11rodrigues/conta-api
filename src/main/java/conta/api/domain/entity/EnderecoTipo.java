@@ -1,4 +1,4 @@
-package conta.api.model;
+package conta.api.domain.entity;
 
 public enum EnderecoTipo {
 

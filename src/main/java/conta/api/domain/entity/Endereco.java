@@ -1,4 +1,4 @@
-package conta.api.model;
+package conta.api.domain.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

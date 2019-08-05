@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import conta.api.model.Cidade;
-import conta.api.model.Cliente;
-import conta.api.model.Endereco;
-import conta.api.model.EnderecoTipo;
-import conta.api.model.Estado;
+import conta.api.domain.entity.Cidade;
+import conta.api.domain.entity.Cliente;
+import conta.api.domain.entity.Endereco;
+import conta.api.domain.entity.EnderecoTipo;
+import conta.api.domain.entity.Estado;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,6 +57,7 @@ public class ClienteRepositoryTest {
 		Assert.assertNotNull(salvo2.getId());
 	}
 	
+	@Test
 	public void adicionarEnderecoAoClienteCadastrado() {
 		cadastrarCidades();
 		Endereco e1 = new Endereco("Avenida 1", "532", "Centro", "12345-678", cid1, EnderecoTipo.RESIDENCIAL);

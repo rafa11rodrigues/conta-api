@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import conta.api.model.Cidade;
-import conta.api.model.Endereco;
+import conta.api.domain.entity.Cidade;
+import conta.api.domain.entity.Endereco;
 
 public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
 
