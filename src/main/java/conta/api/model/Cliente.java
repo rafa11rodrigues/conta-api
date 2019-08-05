@@ -6,23 +6,20 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.util.Assert;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "cliente")
-@Data
+@Getter
 public class Cliente {
 
 	@Id
@@ -35,11 +32,9 @@ public class Cliente {
 	@Column(name = "cpf", length = 14, nullable = false, unique = true)
 	private String cpf;
 	
-	@ManyToMany(cascade = CascadeType.REMOVE)
-	@JoinTable(name = "cliente_endereco",
-				joinColumns = {@JoinColumn(name = "cliente_id", referencedColumnName = "id")},
-				inverseJoinColumns = {@JoinColumn(name = "endereco_id", referencedColumnName = "id")})
-	List<Endereco> enderecos;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cliente_id")
+	private List<Endereco> enderecos;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Conta> contas;
@@ -47,24 +42,25 @@ public class Cliente {
 	
 	public Cliente() {
 		this.enderecos = new ArrayList<>();
+		this.contas = new ArrayList<>();
 	}
 
 	public Cliente(String nome, String cpf) {
 		this();
 		
-		Assert.hasText(nome, "nome é obrigatório");
-		Assert.hasText(cpf, "cpf é obrigatório");
-		Assert.isTrue(cpf.matches("[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}"), "cpf deve ter formato ___.___.___-__");
+		Assert.hasText(nome, "nome não pode ser nulo nem vazio");
+		Assert.hasText(cpf, "cpf não pode ser nulo nem vazio");
+		Assert.isTrue(cpf.matches("[0-9]{3}[.][0-9]{3}[.][0-9]{3}-[0-9]{2}"), "cpf deve ter o formato XXX.XXX.XXX-XX");
 		
 		this.nome = nome;
 		this.cpf = cpf;
 	}
-
-	public Cliente(String nome, String cpf, List<Endereco> enderecos) {
-		this(nome, cpf);
+	
+	public void addEnderecos(Endereco... enderecos) {
+		Assert.notNull(enderecos, "o array de endereços não pode ser null");
+		Assert.isTrue(enderecos.length > 0, "deve ser passado ao menos 1 endereço");
 		
-		Assert.notNull(enderecos, "lista de endereços não pode ser nula");
-		
-		this.enderecos = enderecos;
+		for (Endereco e: enderecos)
+			this.enderecos.add(e);
 	}
 }

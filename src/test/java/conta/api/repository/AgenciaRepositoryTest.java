@@ -26,6 +26,11 @@ public class AgenciaRepositoryTest {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	
+	
+	private Cidade buscarCidade(String nome) {
+		return cidadeRepository.findByNome(nome).orElse(null);
+	}
+	
 	@Before
 	public void cadastrarCidades() {
 		cidadeRepository.save(new Cidade("Maringá", Estado.PR));
@@ -43,8 +48,8 @@ public class AgenciaRepositoryTest {
 	
 	@Test
 	public void cadastrarAgencia() {
-		Cidade c = cidadeRepository.findByNome("Maringá").orElse(null);
-		Agencia a = new Agencia("1234", c);
+		Cidade c = buscarCidade("Maringá");
+		Agencia a = new Agencia("1234", "1", c);
 		
 		Agencia salva = agenciaRepository.save(a);
 		
@@ -55,13 +60,13 @@ public class AgenciaRepositoryTest {
 	
 	@Test
 	public void buscarAgenciaPorCidade() {
-		Cidade c1 = cidadeRepository.findByNome("Maringá").orElse(null);
-		Cidade c2 = cidadeRepository.findByNome("São Paulo").orElse(null);
-		Cidade c3 = cidadeRepository.findByNome("Curitiba").orElse(null);
+		Cidade c1 = buscarCidade("Maringá");
+		Cidade c2 = buscarCidade("São Paulo");
+		Cidade c3 = buscarCidade("Curitiba");
 		
-		agenciaRepository.save(new Agencia("1234", c1));
-		agenciaRepository.save(new Agencia("9876", c1));
-		agenciaRepository.save(new Agencia("0007", c2));
+		agenciaRepository.save(new Agencia("1234", "1", c1));
+		agenciaRepository.save(new Agencia("9876", "2", c1));
+		agenciaRepository.save(new Agencia("0007", "3", c2));
 		
 		List<Agencia> a1 = agenciaRepository.findByCidade(c1);
 		List<Agencia> a2 = agenciaRepository.findByCidade(c2);
@@ -74,18 +79,18 @@ public class AgenciaRepositoryTest {
 	
 	@Test
 	public void buscarAgenciaPorEstado() {
-		Cidade c1 = cidadeRepository.findByNome("Maringá").orElse(null);
-		Cidade c2 = cidadeRepository.findByNome("São Paulo").orElse(null);
-		Cidade c3 = cidadeRepository.findByNome("Curitiba").orElse(null);
+		Cidade c1 = buscarCidade("Maringá");
+		Cidade c2 = buscarCidade("São Paulo");
+		Cidade c3 = buscarCidade("Curitiba");
 		
-		agenciaRepository.save(new Agencia("1234", c1));
-		agenciaRepository.save(new Agencia("9876", c1));
-		agenciaRepository.save(new Agencia("0007", c2));
-		agenciaRepository.save(new Agencia("5523", c3));
+		agenciaRepository.save(new Agencia("1234", "1", c1));
+		agenciaRepository.save(new Agencia("9876", "2", c1));
+		agenciaRepository.save(new Agencia("0007", "3", c2));
+		agenciaRepository.save(new Agencia("5523", "4", c3));
 		
-		List<Agencia> a1 = agenciaRepository.findByEstado(c1.getEstado());
-		List<Agencia> a2 = agenciaRepository.findByEstado(c2.getEstado());
-		List<Agencia> a3 = agenciaRepository.findByEstado(c3.getEstado());
+		List<Agencia> a1 = agenciaRepository.findByUf(c1.getUf());
+		List<Agencia> a2 = agenciaRepository.findByUf(c2.getUf());
+		List<Agencia> a3 = agenciaRepository.findByUf(c3.getUf());
 		
 		Assert.assertEquals(3, a1.size());
 		Assert.assertEquals(1, a2.size());

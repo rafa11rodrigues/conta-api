@@ -2,6 +2,8 @@ package conta.api.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,11 +13,11 @@ import javax.persistence.Table;
 
 import org.springframework.util.Assert;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "endereco")
-@Data
+@Getter
 public class Endereco {
 
 	@Id
@@ -38,35 +40,41 @@ public class Endereco {
 	private String cep;
 	
 	@ManyToOne
-	@JoinColumn(name = "cidade_id", referencedColumnName = "id")
+	@JoinColumn(name = "cidade_id")
 	private Cidade cidade;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo", length = 20)
+	private EnderecoTipo tipo;
 	
 	
 	public Endereco() {}
 
-	public Endereco(String logradouro, String bairro, String cep, Cidade cidade) {
-		Assert.hasText(logradouro, "logradouro é obrigatório");
-		Assert.hasText(bairro, "bairro é obrigatório");
-		Assert.hasText(cep, "cep é obrigatório");
-		Assert.isTrue(cep.matches("[0-9]{5}-[0-9]{3}"), "cep deve ter o formato: _____-___");
-		Assert.notNull(cidade, "cidade é obrigatória");
+	public Endereco(String logradouro, String bairro, String cep, Cidade cidade, EnderecoTipo tipo) {
+		Assert.hasText(logradouro, "logradouro não pode ser nulo nem vazio");
+		Assert.hasText(bairro, "bairro não pode ser nulo nem vazio");
+		Assert.hasText(cep, "cep não pode ser nulo nem vazio");
+		Assert.isTrue(cep.matches("[0-9]{5}-[0-9]{3}"), "cep deve ter o formato: XXXXX-XXX");
+		Assert.notNull(cidade, "cidade não pode ser nulo");
+		Assert.notNull(tipo, "tipo não pode ser nulo");
 		
 		this.logradouro = logradouro;
 		this.numero = "S/N";
 		this.bairro = bairro;
 		this.cep = cep;
 		this.cidade = cidade;
+		this.tipo = tipo;
 	}
 	
-	public Endereco(String logradouro, String numero, String bairro, String cep, Cidade cidade) {
-		this(logradouro, bairro, cep, cidade);
+	public Endereco(String logradouro, String numero, String bairro, String cep, Cidade cidade, EnderecoTipo tipo) {
+		this(logradouro, bairro, cep, cidade, tipo);
+		Assert.hasText(numero, "número não pode ser nulo nem vazio");
 		
-		Assert.notNull(numero, "número não pode ser nulo");
 		this.numero = numero;
 	}
 	
-	public Endereco(String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade) {
-		this(logradouro, numero, bairro, cep, cidade);
+	public Endereco(String logradouro, String numero, String complemento, String bairro, String cep, Cidade cidade, EnderecoTipo tipo) {
+		this(logradouro, numero, bairro, cep, cidade, tipo);
 		this.complemento = complemento;
 	}
 }

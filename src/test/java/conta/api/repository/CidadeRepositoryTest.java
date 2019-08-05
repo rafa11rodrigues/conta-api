@@ -33,7 +33,7 @@ public class CidadeRepositoryTest {
 		
 		Assert.assertNotNull(cidadeSalva.getId());
 		Assert.assertEquals(cidade.getNome(), cidadeSalva.getNome());
-		Assert.assertEquals(cidade.getEstado(), cidadeSalva.getEstado());
+		Assert.assertEquals(cidade.getUf(), cidadeSalva.getUf());
 	}
 	
 	@Test
@@ -45,7 +45,7 @@ public class CidadeRepositoryTest {
 		
 		Assert.assertNotNull(cidadeBuscada);
 		Assert.assertEquals(cidade.getNome(), cidadeBuscada.getNome());
-		Assert.assertEquals(cidade.getEstado(), cidadeBuscada.getEstado());
+		Assert.assertEquals(cidade.getUf(), cidadeBuscada.getUf());
 	}
 	
 	@Test
@@ -54,9 +54,9 @@ public class CidadeRepositoryTest {
 		cidadeRepository.save(new Cidade("Curitiba", Estado.PR));
 		cidadeRepository.save(new Cidade("São Paulo", Estado.SP));
 		
-		List<Cidade> cidadesPR = cidadeRepository.findByEstado(Estado.PR);
-		List<Cidade> cidadesSP = cidadeRepository.findByEstado(Estado.SP);
-		List<Cidade> cidadesRS = cidadeRepository.findByEstado(Estado.RS);
+		List<Cidade> cidadesPR = cidadeRepository.findByUf(Estado.PR);
+		List<Cidade> cidadesSP = cidadeRepository.findByUf(Estado.SP);
+		List<Cidade> cidadesRS = cidadeRepository.findByUf(Estado.RS);
 		
 		Assert.assertEquals(2, cidadesPR.size());
 		Assert.assertEquals(1, cidadesSP.size());

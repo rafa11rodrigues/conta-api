@@ -12,12 +12,14 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.util.Assert;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "agencia",
-		uniqueConstraints = @UniqueConstraint(columnNames = {"numero", "cidade_id"}))
-@Data
+		uniqueConstraints = {@UniqueConstraint(columnNames = {"numero", "cidade_id"}),
+							 @UniqueConstraint(columnNames = {"numero", "digito"})}
+)
+@Getter
 public class Agencia {
 
 	@Id
@@ -27,18 +29,23 @@ public class Agencia {
 	@Column(name = "numero", nullable = false)
 	private String numero;
 	
+	@Column(name = "digito", nullable = false)
+	private String digito;
+	
 	@ManyToOne
-	@JoinColumn(name = "cidade_id", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "cidade_id", nullable = false)
 	private Cidade cidade;
 
 	
 	public Agencia() {}
 	
-	public Agencia(String numero, Cidade cidade) {
-		Assert.hasText(numero, "número é obrigatório");
+	public Agencia(String numero, String digito, Cidade cidade) {
+		Assert.hasText(numero, "número não pode ser nulo nem vazio");
+		Assert.hasText(digito, "dígito não pode ser nulo nem vazio");
 		Assert.notNull(cidade, "a agência precisa de uma cidade");
 		
 		this.numero = numero;
+		this.digito = digito;
 		this.cidade = cidade;
 	}
 }

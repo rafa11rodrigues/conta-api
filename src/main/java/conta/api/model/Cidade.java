@@ -12,12 +12,12 @@ import javax.persistence.UniqueConstraint;
 
 import org.springframework.util.Assert;
 
-import lombok.Data;
+import lombok.Getter;
 
 @Entity
 @Table(name = "cidade",
-		uniqueConstraints = @UniqueConstraint(columnNames = {"nome", "estado"}))
-@Data
+		uniqueConstraints = @UniqueConstraint(columnNames = {"nome", "uf"}))
+@Getter
 public class Cidade {
 
 	@Id
@@ -28,16 +28,16 @@ public class Cidade {
 	private String nome;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "estado", length = 2, nullable = false)
-	private Estado estado;
+	@Column(name = "uf", length = 2, nullable = false)
+	private Estado uf;
 	
 	public Cidade() {}
 	
-	public Cidade(String nome, Estado estado) {
-		Assert.hasText(nome, "O nome é obrigatório");
-		Assert.notNull(estado, "O estado é obrigatório");
+	public Cidade(String nome, Estado uf) {
+		Assert.hasText(nome, "nome não pode ser nulo nem vazio");
+		Assert.notNull(uf, "uf não pode ser nulo");
 		
 		this.nome = nome;
-		this.estado = estado;
+		this.uf = uf;
 	}
 }

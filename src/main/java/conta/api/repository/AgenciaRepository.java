@@ -17,6 +17,6 @@ public interface AgenciaRepository extends JpaRepository<Agencia, Long> {
 	
 	List<Agencia> findByCidade(Cidade cidade);
 	
-	@Query("SELECT a FROM Agencia a WHERE a.cidade.estado = :estado")
-	List<Agencia> findByEstado(@Param("estado") Estado estado);
+	@Query("SELECT a FROM Agencia a WHERE a.cidade.uf = :uf")
+	List<Agencia> findByUf(@Param("uf") Estado uf);
 }
